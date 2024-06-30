@@ -1,41 +1,21 @@
 import { getChromeStorage, setChromeStorage } from '~shared/storage';
 import '../styles/global.css';
 import React, { useEffect, useState } from "react";
+import { useChromeStorage } from '~shared/hooks/useChromeStorage';
+import { languages } from '~shared/constants/languageCode';
 
 const IndexPopup: React.FC = () => {
-  const [fromLanguage, setFromLanguage] = useState("");
-  const [toLanguage, setToLanguage] = useState("");
-  const [apiKey, setApiKey] = useState("");
+  const [fromLanguage, setFromLanguage] = useChromeStorage("fromLanguage", "");
+  const [toLanguage, setToLanguage] = useChromeStorage("toLanguage", "");
+  const [apiKey, setApiKey] = useChromeStorage("apiKey", "");
 
-  useEffect(() => {
-    const loadSettings = async () => {
-      const fromLang = await getChromeStorage("fromLanguage", "");
-      const toLang = await getChromeStorage("toLanguage", "");
-      const apiKey = await getChromeStorage("apiKey", "");
-      setFromLanguage(fromLang);
-      setToLanguage(toLang);
-      setApiKey(apiKey);
-    };
-
-    loadSettings();
-  }, []);
+  
 
   const handleSaveSettings = async () => {
     await setChromeStorage("fromLanguage", fromLanguage);
     await setChromeStorage("toLanguage", toLanguage);
     await setChromeStorage("apiKey", apiKey);
   };
-
-  const languages = [
-    "English",
-    "Japanese",
-    "Korean",
-    "Chinese",
-    "Spanish",
-    "French",
-    "German",
-    // Add more languages as needed
-  ];
 
   return (
     <div className="w-[200px] p-4 bg-white rounded-lg shadow-lg">
@@ -51,7 +31,7 @@ const IndexPopup: React.FC = () => {
             className="block w-full pl-3 py-1.5 text-sm border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
           />
           <datalist id="languages">
-            {languages.map((lang, index) => (
+            {Object.entries(languages).map(([lang, code], index) => (
               <option key={index} value={lang} />
             ))}
           </datalist>
@@ -69,7 +49,7 @@ const IndexPopup: React.FC = () => {
             className="block w-full pl-3 py-1.5 text-sm border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
           />
           <datalist id="languages">
-            {languages.map((lang, index) => (
+            {Object.entries(languages).map(([lang, code], index) => (
               <option key={index} value={lang} />
             ))}
           </datalist>

@@ -8,8 +8,7 @@ interface Translations {
   [key: string]: string;
 }
 
-const TranslatePopup = ({ translations, onClose, fontSize }: { translations: Translations; onClose: any; fontSize: number }) => {
-  const adjustedFontSize = (fontSize <= 12 ? 14 : fontSize)+2;
+const TranslatePopup = ({ translations, onClose }: { translations: Translations; onClose: any }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const TranslatePopup = ({ translations, onClose, fontSize }: { translations: Tra
   });
 
   return (
-    <div className={`bg-white text-black border border-gray-300 rounded-lg shadow-lg relative font-sans text-[${adjustedFontSize}px]`}>
+    <div className={`bg-white text-black border border-gray-300 rounded-lg shadow-lg relative font-sans`}>
       <div className="flex justify-end items-center p-0.5">
         <button
           className="text-black bg-transparent hover:text-gray-700"
@@ -39,7 +38,7 @@ const TranslatePopup = ({ translations, onClose, fontSize }: { translations: Tra
           <FontAwesomeIcon icon={faCircleXmark} style={{ width: 18, height: 18 }} />
         </button>
       </div>
-      <article className="p-2">
+      <article className="px-2">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <FontAwesomeIcon icon={faSpinner} spin />

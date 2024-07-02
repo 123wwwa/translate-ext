@@ -113,13 +113,13 @@ function showTooltip(event) {
               :host {
                 all: initial;
                 display: block;
-                font-size: ${fontSize}px;
+                font-size: 16px;
                 font-family: Arial, sans-serif;
                 color: black;
               }
             `}
           </style>
-          <TranslatePopup translations={translatedText} onClose={hideTooltip} fontSize={fontSize} />
+          <TranslatePopup translations={translatedText} onClose={hideTooltip} />
         </root.div>
       </React.StrictMode>
     );
@@ -130,7 +130,7 @@ function showTooltip(event) {
   tooltipElement.style.top = `${rect.bottom + window.scrollY}px`;
   tooltipElement.style.left = `${rect.left + window.scrollX}px`;
   tooltipElement.style.width = `${rect.width}px`;
-  tooltipElement.style.fontSize = `${fontSize}px`;
+  tooltipElement.style.fontSize = `16px`;
   tooltipElement.style.display = "block";
 
   element._tooltip = tooltipElement;
@@ -168,13 +168,13 @@ function updateTooltipContent(translations, fontSize, tailwindCssUrl) {
           :host {
             all: initial;
             display: block;
-            font-size: ${fontSize}px;
+            font-size: 16px;
             font-family: Arial, sans-serif;
             color: black;
           }
         `}
       </style>
-      <TranslatePopup translations={translations} onClose={hideTooltip} fontSize={fontSize} />
+      <TranslatePopup translations={translations} onClose={hideTooltip} />
     </root.div>
   );
 }

@@ -1,21 +1,13 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 import JishoAPI from 'unofficial-jisho-api';
+import type { JishoResult } from "~shared/types/jishoTypes";
 const jisho = new JishoAPI();
 export type RequestBody = {
     tokens: any[]
 }
-export type Token = {
-    isDict: boolean,
-    text: string,
-    type?: string,
-    reading?: string,
-    meanings?: any[],
-    onyomi?: string[],
-    kunyomi?: string[],
-    jlpt?: string,
-}
+
 export type ResponseBody = {
-    data: Token[]
+    data: JishoResult[]
 }
 
 const handler: PlasmoMessaging.MessageHandler<RequestBody, ResponseBody> = async (req, res) => {

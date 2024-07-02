@@ -63,7 +63,7 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
             <div
                 ref={ref}
                 style={position}
-                className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black text-white text-xl rounded-lg w-72 max-h-[200px] overflow-y-auto shadow-lg tooltip"
+                className="absolute z-50 top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black text-white text-xl rounded-lg w-72 max-h-[200px] overflow-y-auto shadow-lg tooltip"
             >
                 <div className="sticky top-0 bg-black pb-2 flex flex-row justify-end items-center gap-x-2 p-2">
                     <h3 className="font-bold text-inherit">{text}</h3>
@@ -73,7 +73,7 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
                 </div>
                 {loading ? (
                     <div className="flex justify-center items-center h-full">
-                        <FontAwesomeIcon icon={faSpinner} spin />
+                        <FontAwesomeIcon icon={faSpinner} spin style={{ width: 22, height: 22 }}/>
                     </div>
                 ) : dictionaryData.length > 0 ? (
                     <div className="p-4">

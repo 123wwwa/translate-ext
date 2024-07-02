@@ -4,8 +4,6 @@ import { sendToBackground } from "@plasmohq/messaging";
 import type { RequestBody, ResponseBody } from "~background/messages/gpt";
 import { prompts } from "./prompts";
 export const gptTranslate = async (text: string) => {
-    const fromLang = await getChromeStorage("fromLanguage", "en");
-    const toLang = await getChromeStorage("toLanguage", "en");
     let content = prompts["jp-ko"]+text;
     let options: AskGptOptions = {
         messages: [{"role": "user", "content":content}],

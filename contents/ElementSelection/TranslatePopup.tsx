@@ -23,13 +23,13 @@ const TranslatePopup = ({ translations, onClose, fontSize }: { translations: Tra
   const translationElements = Object.entries(translations).map(([translation, original], index) => {
     return (
       <HoverTooltip key={index} tooltipText={original}>
-        {translation + " "}
+        {translation}
       </HoverTooltip>
     );
   });
 
   return (
-    <div className={`bg-white text-black border border-gray-300 rounded-lg shadow-lg relative text-[${adjustedFontSize}px]`}>
+    <div className={`bg-white text-black border border-gray-300 rounded-lg shadow-lg relative font-sans text-[${adjustedFontSize}px]`}>
       <div className="flex justify-end items-center p-0.5">
         <button
           className="text-black bg-transparent hover:text-gray-700"
@@ -39,7 +39,7 @@ const TranslatePopup = ({ translations, onClose, fontSize }: { translations: Tra
           <FontAwesomeIcon icon={faCircleXmark} style={{ width: 18, height: 18 }} />
         </button>
       </div>
-      <article>
+      <article className="p-2">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <FontAwesomeIcon icon={faSpinner} spin />

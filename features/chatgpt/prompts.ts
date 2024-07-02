@@ -20,3 +20,6 @@ export const prompts = {
     '{"Today": "今日", "is": "は", "fifteenth night.": "十五夜だ。","The autumn": "秋", "night sky": "夜空","with": "の","clear": "清","and": "く", "serene": "澄","full moon": "満月","is beautiful.": "美しい。"}'
     Here is the input:`,
 }
+export const explainPrompts = {
+    "jp-ko": "다음 일본어에 대한 해석과 그에 대한 자연스러운 설명을 제공해줘."
+}

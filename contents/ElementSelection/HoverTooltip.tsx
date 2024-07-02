@@ -37,7 +37,7 @@ const HoverTooltip: React.FC<HoverTooltipProps> = ({ children, tooltipText}) => 
   }, [showTooltip]);
 
   return (
-    <span className="relative group" onClick={handleClick}>
+    <span className="relative group mr-2" onClick={handleClick}>
       <span className="hover:underline inline-block break-words">{children}</span>
       {showTooltip && (
         <TooltipContent

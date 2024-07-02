@@ -3,10 +3,12 @@ import React from "react";
 import TranslatePopup from "./TranslatePopup";
 import { createRoot } from "react-dom/client";
 import { gptTranslate } from "~features/chatgpt";
+import root from "react-shadow";
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"]
-}
+};
+
 let lastElement = null;
 let tooltipElement = null;
 let itemRoot = null;
@@ -92,8 +94,8 @@ function showTooltip(event) {
   event.stopPropagation(); // 이벤트 버블링 중지
   const element = event.target;
   const translatedText = translatedTexts.get(element);
-  const fontSize = parseFloat(window.getComputedStyle(element).fontSize);
-
+  const fontSize = Math.max(parseFloat(window.getComputedStyle(element).fontSize),14);
+  const tailwindCssUrl = window.chrome.runtime.getURL('assets/dict/tailwind.css');
   // 요소의 위치와 크기를 가져와서 툴팁에 적용
   const rect = element.getBoundingClientRect();
   if (!tooltipElement) {
@@ -104,11 +106,25 @@ function showTooltip(event) {
     itemRoot = createRoot(tooltipElement);
     itemRoot.render(
       <React.StrictMode>
-        <TranslatePopup translations={translatedText} onClose={hideTooltip} fontSize={fontSize} />
+        <root.div>
+        <style>
+            {`
+              @import url(${tailwindCssUrl});
+              :host {
+                all: initial;
+                display: block;
+                font-size: ${fontSize}px;
+                font-family: Arial, sans-serif;
+                color: black;
+              }
+            `}
+          </style>
+          <TranslatePopup translations={translatedText} onClose={hideTooltip} fontSize={fontSize} />
+        </root.div>
       </React.StrictMode>
     );
   } else {
-    updateTooltipContent(translatedText, fontSize);
+    updateTooltipContent(translatedText, fontSize, tailwindCssUrl);
   }
 
   tooltipElement.style.top = `${rect.bottom + window.scrollY}px`;
@@ -143,11 +159,23 @@ function hideTooltip() {
   }
 }
 
-function updateTooltipContent(translations, fontSize) {
+function updateTooltipContent(translations, fontSize, tailwindCssUrl) {
   itemRoot.render(
-    <React.StrictMode>
+    <root.div>
+      <style>
+        {`
+          @import url(${tailwindCssUrl});
+          :host {
+            all: initial;
+            display: block;
+            font-size: ${fontSize}px;
+            font-family: Arial, sans-serif;
+            color: black;
+          }
+        `}
+      </style>
       <TranslatePopup translations={translations} onClose={hideTooltip} fontSize={fontSize} />
-    </React.StrictMode>
+    </root.div>
   );
 }
 

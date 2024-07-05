@@ -21,5 +21,19 @@ export const prompts = {
     Here is the input:`,
 }
 export const explainPrompts = {
-    "jp-ko": "다음 일본어에 대한 해석과 그에 대한 자연스러운 설명을 제공해줘."
+    "jp-ko": (text, selection) => {
+        return `다음 일본어에 대한 해석과 그에 대한 자연스러운 설명을 아래 형식으로 제공해줘.
+    예시: 勉強はコスパ最強の遊びだ에서 "コスパ"의 의미 설명
+    답변: {"meaning":"여기서 コスパ는 コストパフォーマンス (cost performance, 비용 대비 효율)의 줄임말로, 무언가의 가성비를 뜻합니다.",
+    "reading": "こすぱ"}
+    설명해야할 것: ${text}에서 ${selection}의 의미는 무엇인가요?`
+    },
+    "jp-en": (text, selection) => {
+        return `Provide an interpretation of the following Japanese and a natural explanation of it.
+    Example: From 勉強はコスパ最強の遊びだ  explain the meaning of "コスパ"
+    Answer: {"meaning": "Here, コスパ is short for コストパフォーマンス (cost performance), meaning the cost performance ratio of something.",
+    "reading": "こすぱ"}
+    Explain: What does ${selection} mean in ${text}?`
+    },
+
 }

@@ -1,10 +1,10 @@
 import * as wanakana from 'wanakana';
 import type { JishoResult } from '~shared/types/jishoTypes';
 const DictionaryCard = ({ data }: { data: JishoResult }) => {
-    return (
-        <div className="snap-center p-4 bg-gray-800 rounded-lg shadow-md flex items-center space-x-4">
-            {data.type === "kanji" ? (
-                <>
+    const dataCard = (data: JishoResult) => {
+        switch (data.type) {
+            case "kanji":
+                return (<>
                     <div className="flex-none text-6xl font-bold text-center w-1/3">{data.text}</div>
                     <div className="flex-1">
                         <p className="text-xl mb-2">{data.meanings?.join(", ")}</p>
@@ -14,9 +14,9 @@ const DictionaryCard = ({ data }: { data: JishoResult }) => {
                             {data.jlpt && <p><strong>JLPT:</strong> {data.jlpt}</p>}
                         </div>
                     </div>
-                </>
-            ) : (
-                <>
+                </>);
+            case "phrase":
+                return (<>
                     <div className="flex-none text-2xl font-bold text-center w-1/3">{data.text}</div>
                     <div className="flex-1">
                         <p className="text-sm text-gray-400 mb-2">{data.reading} ({wanakana.toRomaji(data.reading)})</p>
@@ -26,8 +26,24 @@ const DictionaryCard = ({ data }: { data: JishoResult }) => {
                             ))}
                         </ol>
                     </div>
-                </>
-            )}
+                </>);
+            case "gpt-explain":
+                return (<>
+                    <div className="flex-none text-2xl font-bold text-center w-1/3">{data.text}</div>
+                    <div className="flex-1">
+                        <p className="text-sm text-gray-400 mb-2">{data.reading} ({wanakana.toRomaji(data.reading)})</p>
+                        <ol className="list-decimal list-inside space-y-1">
+                            {data.meanings.join(", ")}
+                        </ol>
+                    </div>
+                </>);
+            default:
+                return null;
+        }
+    };
+    return (
+        <div className="snap-center p-4 bg-gray-800 rounded-lg shadow-md flex items-center space-x-4">
+            {dataCard(data)}
         </div>
     );
 };

@@ -18,22 +18,8 @@ const HoverTooltip: React.FC<HoverTooltipProps> = ({ children, tooltipText}) => 
     setShowTooltip(false);
   };
 
-  const handleOutsideClick = (event: MouseEvent) => {
-    if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
-      setShowTooltip(false);
-    }
-  };
 
   useEffect(() => {
-    if (showTooltip) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
   }, [showTooltip]);
 
   return (

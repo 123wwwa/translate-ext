@@ -66,18 +66,20 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
 
       fetchData();
     }, [text]);
+
     useEffect(() => {
-        const handleClickOutside = (event) => {
-          if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
-            onClose();
-          }
-        };
-  
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-        };
-      }, [tooltipRef, onClose]);
+      const handleClickOutside = (event) => {
+        if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+          onClose();
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [tooltipRef, onClose]);
+
     const handleTextSelection = async (text: string, e: any) => {
       // check if the selection is already explained
       const isExplained = explainedData.some((item) => item.selection === e.selection);
@@ -103,7 +105,8 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
         ref={tooltipRef}
         style={position}
         onClick={(event) => event.stopPropagation()}
-        className="absolute z-50 top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black text-white text-sm rounded-lg w-80 max-h-[300px] overflow-y-auto snap-y snap-mandatory shadow-lg tooltip"
+        className="absolute z-50 top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black text-white text-sm rounded-lg w-[400px] max-h-[300px] overflow-y-auto snap-y snap-mandatory shadow-lg tooltip"
+        onMouseDown={(event) => event.stopPropagation()} // 이벤트 전파 중지
       >
         <div className="sticky top-0 bg-black pb-2 flex flex-row justify-end items-center gap-x-2 p-2">
           <HighLighter text={text} selectionHandler={(e) => handleTextSelection(text, e)} className="hover:underline font-bold text-xl border-b-2 border-white rounded" />

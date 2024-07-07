@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getChromeStorage } from "~shared/storage";
+import { getChromeStorage, getChromeStorageList } from "~shared/storage";
 
 export const useChromeStorage = (key, defaultValue) => {
     const [value, setValue] = useState(defaultValue);

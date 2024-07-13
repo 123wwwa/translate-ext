@@ -5,13 +5,13 @@
   ],
   "include": [
     ".plasmo/index.d.ts",
-    "./**/*.ts",
-    "./**/*.tsx"
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ],
   "compilerOptions": {
     "baseUrl": "./src", // 기본 경로를 src 디렉토리로 설정
     "paths": {
       "~*": ["*"] // 모든 모듈을 src 디렉토리에서 찾도록 설정
     },
-  }
+  },
 }

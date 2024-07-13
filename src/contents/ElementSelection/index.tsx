@@ -98,7 +98,7 @@ function showTooltip(event, element) {
         <root.div>
           <style>
             {`
-              @import url(${window.chrome.runtime.getURL('assets/dict/tailwind.css')});
+              @import url(${window.chrome.runtime.getURL('src/assets/dict/tailwind.css')});
               :host {
                 all: initial;
                 display: block;

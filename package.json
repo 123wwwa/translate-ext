@@ -8,7 +8,7 @@
     "dev": "pnpm build:css && plasmo dev",
     "build": "pnpm build:css && plasmo build",
     "package": "plasmo package",
-    "build:css": "pnpx tailwindcss build src/styles/global.css -o src/assets/dict/tailwind.css",
+    "build:css": "pnpx tailwindcss build src/styles/global.css -o src/assets/dict/tailwind.css --config ./src/tailwind.config.js --postcss ./src/postcss.config.js",
     "clone:dict": "mkdir -p assets && cp -r node_modules/kuromoji/dict src/assets/"
   },
   "dependencies": {
@@ -74,7 +74,7 @@
     "web_accessible_resources": [
       {
         "resources": [
-          "assets/dict/*"
+          "src/assets/dict/*"
         ],
         "matches": [
           "<all_urls>"

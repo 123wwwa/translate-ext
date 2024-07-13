@@ -8,8 +8,8 @@
     "dev": "pnpm build:css && plasmo dev",
     "build": "pnpm build:css && plasmo build",
     "package": "plasmo package",
-    "build:css": "pnpx tailwindcss build styles/global.css -o assets/dict/tailwind.css",
-    "clone:dict": "mkdir -p assets && cp -r node_modules/kuromoji/dict assets/"
+    "build:css": "pnpx tailwindcss build src/styles/global.css -o src/assets/dict/tailwind.css",
+    "clone:dict": "mkdir -p assets && cp -r node_modules/kuromoji/dict src/assets/"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -52,7 +52,10 @@
       "https://*/*"
     ],
     "permissions": [
-      "scripting"
+      "scripting",
+      "storage",
+      "unlimitedStorage",
+      "sidePanel"
     ],
     "commands": {
       "activate-selection": {

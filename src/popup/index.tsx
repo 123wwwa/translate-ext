@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useChromeStorage } from '~shared/hooks/useChromeStorage';
 import { languages } from '~shared/constants/languageCode';
 import { setChromeStorage } from '~shared/storage/helper';
+import { usePort } from '@plasmohq/messaging/hook';
 
 const IndexPopup: React.FC = () => {
   const [fromLanguage, setFromLanguage] = useChromeStorage("fromLanguage", "");
   const [toLanguage, setToLanguage] = useChromeStorage("toLanguage", "");
   const [apiKey, setApiKey] = useChromeStorage("apiKey", "");
+  const sidePanelPort = usePort("sidepanel");
 
-  
-
+  const openSidePanel = () => {
+    sidePanelPort.send({});
+  };
   const handleSaveSettings = async () => {
     await setChromeStorage("fromLanguage", fromLanguage);
     await setChromeStorage("toLanguage", toLanguage);
@@ -70,6 +73,13 @@ const IndexPopup: React.FC = () => {
       >
         Save Settings
       </button>
+      <button
+        onClick={openSidePanel}
+        className="w-full mt-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition duration-300"
+      >
+        Open Side Panel
+      </button>
+
     </div>
   );
 };

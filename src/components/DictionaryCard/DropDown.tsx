@@ -2,22 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller } from 'react-hook-form';
-import { getAllWordBookNames, saveWord } from '~shared/storage/dictionary';
+import { getAllWordBookNames, saveWord, isWordStored } from '~shared/storage/dictionary';
 import type { JishoResult } from '~shared/types/jishoTypes';
 import { usePort } from "@plasmohq/messaging/hook";
+
 const DropDown = ({ data, closeDropdown }: { data: JishoResult, closeDropdown: () => void }) => {
     const { control, handleSubmit, reset } = useForm();
     const [wordBooks, setWordBooks] = useState<string[]>([]);
     const [selectedWordBook, setSelectedWordBook] = useState<string>('Default word');
     const [newWordBook, setNewWordBook] = useState<string>('');
+    const [alreadySaved, setAlreadySaved] = useState<boolean>(false);
+    const [existingWordBooks, setExistingWordBooks] = useState<string[]>([]);
     const sidePanelPort = usePort("sidepanel");
+
     useEffect(() => {
         const fetchWordBooks = async () => {
             const wordBooks = await getAllWordBookNames();
             setWordBooks(wordBooks);
+            const storedWordBooks = await isWordStored(data);
+            setExistingWordBooks(storedWordBooks);
+            setAlreadySaved(storedWordBooks.length > 0);
         };
         fetchWordBooks();
-    }, []);
+    }, [data]);
 
     const saveData = async (data: JishoResult, wordbook: string) => {
         await saveWord(data, wordbook);
@@ -26,6 +33,7 @@ const DropDown = ({ data, closeDropdown }: { data: JishoResult, closeDropdown: (
     const openSidePanel = () => {
         sidePanelPort.send({});
     }
+
     const onSubmit = async (formData: any) => {
         const wordbook = formData.wordbook === 'new' ? newWordBook : formData.wordbook;
         await saveData(data, wordbook);
@@ -46,6 +54,11 @@ const DropDown = ({ data, closeDropdown }: { data: JishoResult, closeDropdown: (
                     </button>
                 </div>
             </div>
+            {alreadySaved && (
+                <div className="p-2 text-red-500">
+                    Already saved in: {existingWordBooks.join(', ')}
+                </div>
+            )}
             <form onSubmit={handleSubmit(onSubmit)} className="p-2">
                 <div className="mb-2">
                     {wordBooks.map((wordbook, index) => (
@@ -67,7 +80,9 @@ const DropDown = ({ data, closeDropdown }: { data: JishoResult, closeDropdown: (
                                     />
                                 )}
                             />
-                            <label className="ml-2 text-gray-700">{wordbook}</label>
+                            <label className={`ml-2 ${existingWordBooks.includes(wordbook) ? 'text-red-500' : 'text-gray-700'}`}>
+                                {wordbook}
+                            </label>
                         </div>
                     ))}
                     <div className="flex items-center mb-1">

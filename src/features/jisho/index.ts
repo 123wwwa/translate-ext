@@ -3,7 +3,7 @@ import { type RequestBody, type ResponseBody } from "~background/messages/jisho"
 import kuromoji from 'kuromoji';
 export const jishoSearchWord = async (word: string) => {
     const searchText = word.trim();
-    const dictPath = window.chrome.runtime.getURL('src/assets/dict');
+    const dictPath = window.chrome.runtime.getURL('assets/dict');
     const tokens = await new Promise((resolve, reject) => {
         kuromoji.builder({ dicPath: dictPath }).build((err, tokenizer) => {
             if (err) {

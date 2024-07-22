@@ -1,6 +1,6 @@
 {
-  "name": "translate-ext",
-  "displayName": "Translate ext",
+  "name": "gpt-japanese-teacher",
+  "displayName": "GPT Japanese Teacher",
   "version": "0.0.1",
   "description": "A basic Plasmo extension.",
   "author": "123wwwa",
@@ -8,15 +8,14 @@
     "dev": "pnpm build:css && plasmo dev",
     "build": "pnpm build:css && plasmo build",
     "package": "plasmo package",
-    "build:css": "pnpx tailwindcss build src/styles/global.css -o src/assets/dict/tailwind.css --config ./src/tailwind.config.js --postcss ./src/postcss.config.js",
-    "clone:dict": "mkdir -p assets && cp -r node_modules/kuromoji/dict src/assets/"
+    "build:css": "pnpx tailwindcss build src/styles/global.css -o assets/dict/tailwind.css --config ./src/tailwind.config.js --postcss ./src/postcss.config.js",
+    "clone:dict": "mkdir -p assets && cp -r node_modules/kuromoji/dict assets/"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@plasmohq/messaging": "^0.6.2",
     "@plasmohq/storage": "^1.11.0",
-    "idb": "^8.0.0",
     "kuromoji": "^0.1.2",
     "plasmo": "0.88.0",
     "prop-types": "^15.8.1",
@@ -26,9 +25,7 @@
     "react-icons": "^5.2.1",
     "react-shadow": "^20.5.0",
     "react-slick": "^0.30.2",
-    "react-tooltip": "^5.27.1",
     "unofficial-jisho-api": "^2.3.4",
-    "uuid": "^10.0.0",
     "wanakana": "^5.3.1",
     "zustand": "^4.5.4"
   },
@@ -74,7 +71,7 @@
     "web_accessible_resources": [
       {
         "resources": [
-          "src/assets/dict/*"
+          "assets/dict/*"
         ],
         "matches": [
           "<all_urls>"

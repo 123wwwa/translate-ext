@@ -36,19 +36,21 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
         try {
           const data = await jishoSearchWord(text);
           if (data.length > 0) {
-            const results = data.map((item: JishoResult) => {
-              const { isDict, type, text, reading, meanings, onyomi, kunyomi, jlpt } = item;
-              return {
-                isDict,
-                type,
-                text,
-                reading,
-                meanings,
-                onyomi,
-                kunyomi,
-                jlpt
-              };
-            });
+            const results = data
+              .filter((item: JishoResult) => item.isDict) // isDict가 true인 아이템만 필터링
+              .map((item: JishoResult) => {
+                const { isDict, type, text, reading, meanings, onyomi, kunyomi, jlpt } = item;
+                return {
+                  isDict,
+                  type,
+                  text,
+                  reading,
+                  meanings,
+                  onyomi,
+                  kunyomi,
+                  jlpt
+                };
+              });
             cache[text] = results;
             setDictionaryData(results);
           } else {
@@ -105,10 +107,10 @@ const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
         ref={tooltipRef}
         style={position}
         onClick={(event) => event.stopPropagation()}
-        className="absolute z-50 top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black text-white text-sm rounded-lg w-[400px] max-h-[300px] overflow-y-auto snap-y snap-mandatory shadow-lg tooltip"
+        className="absolute z-50 top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black text-white text-sm rounded-lg w-[400px] max-h-[300px] overflow-y-auto overscroll-contain snap-y snap-mandatory shadow-lg tooltip"
         onMouseDown={(event) => event.stopPropagation()} // 이벤트 전파 중지
       >
-        <div className="sticky top-0 bg-black pb-2 flex flex-row justify-end items-center gap-x-2 p-2">
+        <div className="sticky top-0 bg-black pb-2 z-10 flex flex-row justify-end items-center gap-x-2 p-2">
           <HighLighter text={text} selectionHandler={(e) => handleTextSelection(text, e)} className="hover:underline font-bold text-xl border-b-2 border-white rounded" />
           <button className="text-white" onClick={onClose} style={{ width: 18, height: 18 }}>
             <FontAwesomeIcon icon={faCircleXmark} style={{ width: 18, height: 18 }} />

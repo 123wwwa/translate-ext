@@ -24,9 +24,34 @@ const removeKeyFromList = async (key: string) => {
 
 export const saveWord = async (word: JishoResult, wordbook: string = 'DefaultWordbook'): Promise<void> => {
     const wordbookData = await getChromeStorage(wordbook, []);
-    wordbookData.push(word);
-    await setChromeStorage(wordbook, wordbookData);
-    await addKeyToList(wordbook);
+    const isDuplicate = wordbookData.some(
+        (storedWord: JishoResult) => storedWord.type === word.type && storedWord.text === word.text
+    );
+
+    if (!isDuplicate) {
+        wordbookData.push(word);
+        await setChromeStorage(wordbook, wordbookData);
+        await addKeyToList(wordbook);
+    } else {
+        console.log(`The word "${word.text}" of type "${word.type}" already exists in the wordbook "${wordbook}".`);
+    }
+};
+
+export const isWordStored = async (word: JishoResult): Promise<string[]> => {
+    const allKeys = await getChromeStorage(KEYS_LIST, []);
+    const wordbooksContainingWord: string[] = [];
+
+    for (const key of allKeys) {
+        const wordbookData = await getChromeStorage(key, []);
+        const isStored = wordbookData.some(
+            (storedWord: JishoResult) => storedWord.type === word.type && storedWord.text === word.text
+        );
+        if (isStored) {
+            wordbooksContainingWord.push(key);
+        }
+    }
+
+    return wordbooksContainingWord;
 };
 
 export const getWord = async (text: string): Promise<JishoResult[]> => {
